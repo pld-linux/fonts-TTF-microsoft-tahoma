@@ -28,7 +28,7 @@ BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 Microsoft Tahoma True Type font.
 
 %description -l pl
-Fontów True Type Tahoma firmy Microsoft.
+Font True Type Tahoma firmy Microsoft.
 
 %prep
 %setup -q -c -T
