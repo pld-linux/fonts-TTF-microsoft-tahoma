@@ -1,5 +1,6 @@
 #
 # Conditional build:
+%bcond_with	license_agreement
 # _with_license_agreement       - generates package (may require Windows license?)
 #
 Summary:	Microsoft Tahoma True Type font
@@ -13,7 +14,7 @@ Group:		Fonts
 # also at http://dl.sourceforge.net/corefonts/
 Source0:	http://download.microsoft.com/download/ie6sp1/finrel/6_sp1/W98NT42KMeXP/EN-US/IELPKTH.CAB
 # NoSource0-md5: 358584cddb75ac90472c25f01b308ebe
-%if 0%{!?_with_license_agreement:1}
+%if ! %{with license_agreement}
 NoSource:	0
 %endif
 BuildRequires:	cabextract
@@ -32,7 +33,7 @@ Font True Type Tahoma firmy Microsoft.
 
 %prep
 %setup -q -c -T
-%if 0%{!?_with_license_agreement:1}
+%if ! %{with license_agreement}
 exit 1
 %endif
 /usr/bin/cabextract -L %{SOURCE0}
