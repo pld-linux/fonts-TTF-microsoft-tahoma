@@ -11,7 +11,7 @@ Name:		%{base_name}
 Name:		%{base_name}-installer
 %endif
 Version:	20020525
-%define		_rel	2
+%define		_rel	3
 Release:	%{_rel}%{?with_license_agreement:wla}
 # part of IE update - requires Windows license to use
 License:	Windows EULA
