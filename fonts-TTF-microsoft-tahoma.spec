@@ -4,7 +4,7 @@
 #
 %define		base_name		fonts-TTF-microsoft-tahoma
 Summary:	Microsoft Tahoma True Type font
-Summary(pl.UTF-8):   Font True Type Tahoma firmy Microsoft
+Summary(pl.UTF-8):	Font True Type Tahoma firmy Microsoft
 %if %{with license_agreement}
 Name:		%{base_name}
 %else
