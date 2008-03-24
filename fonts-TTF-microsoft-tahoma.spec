@@ -3,8 +3,8 @@
 %bcond_with	license_agreement	# generates package (requires Windows license)
 #
 %define		base_name		fonts-TTF-microsoft-tahoma
-Summary:	Microsoft Tahoma True Type font
-Summary(pl.UTF-8):	Font True Type Tahoma firmy Microsoft
+Summary:	Microsoft Tahoma TrueType font
+Summary(pl.UTF-8):	Font TrueType Tahoma firmy Microsoft
 %if %{with license_agreement}
 Name:		%{base_name}
 %else
@@ -34,10 +34,10 @@ BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 %define		ttffontsdir	%{_fontsdir}/TTF
 
 %description
-Microsoft Tahoma True Type font.
+Microsoft Tahoma TrueType font.
 
 %description -l pl.UTF-8
-Font True Type Tahoma firmy Microsoft.
+Font TrueType Tahoma firmy Microsoft.
 
 %prep
 %if %{with license_agreement}
