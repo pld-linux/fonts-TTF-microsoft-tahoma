@@ -1,32 +1,33 @@
 #
 # Conditional build:
-%bcond_with	license_agreement	# generates package (may require Windows license?)
+%bcond_with	license_agreement	# generates package (requires Windows license)
 #
-Summary:	Microsoft Tahoma True Type font
-Summary(pl):	Font True Type Tahoma firmy Microsoft
 %define		base_name		fonts-TTF-microsoft-tahoma
+Summary:	Microsoft Tahoma TrueType font
+Summary(pl.UTF-8):	Font TrueType Tahoma firmy Microsoft
 %if %{with license_agreement}
 Name:		%{base_name}
 %else
 Name:		%{base_name}-installer
 %endif
 Version:	20020525
-Release:	2%{?with_license_agreement:wla}
-# part of IE update - may require Windows license to use
-License:	?
+%define		_rel	4
+Release:	%{_rel}%{?with_license_agreement:wla}
+# part of IE update - requires Windows license to use
+License:	Windows EULA
 Group:		Fonts
 %if %{with license_agreement}
-# also at http://dl.sourceforge.net/corefonts/
 Source0:	http://download.microsoft.com/download/ie6sp1/finrel/6_sp1/W98NT42KMeXP/EN-US/IELPKTH.CAB
 # NoSource0-md5: 358584cddb75ac90472c25f01b308ebe
+NoSource:	0
 BuildRequires:	cabextract
-Requires:	%{_fontsdir}/TTF
 Requires(post,postun):	fontpostinst
+Requires:	%{_fontsdir}/TTF
 %else
-Source0:	license-installer.sh
+Source1:	http://svn.pld-linux.org/svn/license-installer/license-installer.sh
+# Source1-md5:  4fb1600353dd57fe088e0b12fb0ecac2
 Requires:	cabextract
-Requires:	rpm-build-tools
-Requires:	wget
+Requires:	rpm-build-tools >= 4.4.35
 %endif
 BuildArch:	noarch
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
@@ -34,35 +35,20 @@ BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 %define		ttffontsdir	%{_fontsdir}/TTF
 
 %description
-Microsoft Tahoma True Type font.
-%if %{without license_agreement}
-License issues made us not to include inherent files into this package
-by default (it probably requires Windows license). If you want to
-create full working package please build it with one of the following
-command:
+Microsoft Tahoma TrueType font.
 
-%{base_name}.install --with license_agreement %{_datadir}/%{base_name}/%{base_name}.spec
-%endif
-
-%description -l pl
-Font True Type Tahoma firmy Microsoft.
-%if %{without license_agreement}
-Kwestie licencji zmusi³y nas do niedo³±czania do tego pakietu istotnych
-plików (prawdopodobnie wymaga licencji na Windows). Je¶li chcesz stworzyæ
-w pe³ni funkcjonalny pakiet, zbuduj go za pomoc± polecenia:
-
-%{base_name}.install --with license_agreement %{_datadir}/%{base_name}/%{base_name}.spec
-%endif
+%description -l pl.UTF-8
+Font TrueType Tahoma firmy Microsoft.
 
 %prep
 %if %{with license_agreement}
 %setup -q -c -T
-/usr/bin/cabextract -L %{SOURCE0}
+%{_bindir}/cabextract -L %{SOURCE0}
 %endif
 
 %install
 rm -rf $RPM_BUILD_ROOT
-%if %{without license_agreement}
+%if !%{with license_agreement}
 install -d $RPM_BUILD_ROOT{%{_bindir},%{_datadir}/%{base_name}}
 
 sed -e '
@@ -70,8 +56,10 @@ sed -e '
 	s/@TARGET_CPU@/%{_target_cpu}/g
 	s-@VERSION@-%{version}-g
 	s-@RELEASE@-%{release}-g
+	s,@USE_DISTFILES@,no,g
 	s,@SPECFILE@,%{_datadir}/%{base_name}/%{base_name}.spec,g
-' %{SOURCE0} > $RPM_BUILD_ROOT%{_bindir}/%{base_name}.install
+	s,@DATADIR@,%{_datadir}/%{base_name},g
+' %{SOURCE1} > $RPM_BUILD_ROOT%{_bindir}/%{base_name}.install
 
 install %{_specdir}/%{base_name}.spec $RPM_BUILD_ROOT%{_datadir}/%{base_name}
 
@@ -94,10 +82,10 @@ fontpostinst TTF
 %post
 echo "
 License issues made us not to include inherent files into this package
-by default (it probably requires Windows license). If you want to
-create full working package please build it with the following command:
+by default (You need Windows license). If you want to create full
+working package please build it with the following command:
 
-%{base_name}.install --with license_agreement %{_datadir}/%{base_name}/%{base_name}.spec
+%{_bindir}/%{base_name}.install --with license_agreement %{_datadir}/%{base_name}/%{base_name}.spec
 "
 %endif
 
