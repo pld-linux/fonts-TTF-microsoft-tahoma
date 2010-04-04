@@ -3,6 +3,7 @@
 %bcond_with	license_agreement	# generates package (requires Windows license)
 #
 %define		base_name		fonts-TTF-microsoft-tahoma
+%define		_rel			5
 Summary:	Microsoft Tahoma TrueType font
 Summary(pl.UTF-8):	Font TrueType Tahoma firmy Microsoft
 %if %{with license_agreement}
@@ -11,7 +12,6 @@ Name:		%{base_name}
 Name:		%{base_name}-installer
 %endif
 Version:	20020525
-%define		_rel	4
 Release:	%{_rel}%{?with_license_agreement:wla}
 # part of IE update - requires Windows license to use
 License:	Windows EULA
@@ -25,9 +25,10 @@ Requires(post,postun):	fontpostinst
 Requires:	%{_fontsdir}/TTF
 %else
 Source1:	http://svn.pld-linux.org/svn/license-installer/license-installer.sh
-# Source1-md5:  4fb1600353dd57fe088e0b12fb0ecac2
+# Source1-md5:  329c25f457fea66ec502b7ef70cb9ede
 Requires:	cabextract
-Requires:	rpm-build-tools >= 4.4.35
+Requires:	rpm-build-macros >= 1.544
+Requires:	rpm-build-tools >= 4.4.37
 %endif
 BuildArch:	noarch
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
