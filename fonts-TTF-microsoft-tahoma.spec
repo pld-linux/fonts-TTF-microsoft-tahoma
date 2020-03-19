@@ -3,7 +3,7 @@
 %bcond_with	license_agreement	# generates package (requires Windows license)
 #
 %define		base_name		fonts-TTF-microsoft-tahoma
-%define		_rel			5
+%define		_rel			6
 Summary:	Microsoft Tahoma TrueType font
 Summary(pl.UTF-8):	Font TrueType Tahoma firmy Microsoft
 %if %{with license_agreement}
